@@ -1,5 +1,5 @@
 from iSourceTextExtractor import iSourceTextExtractor
-
+import PyPDF2
 class PdfTextExtractor(iSourceTextExtractor):
     """
     PdfTextExtractor
@@ -8,13 +8,16 @@ class PdfTextExtractor(iSourceTextExtractor):
     """
 
     def __init__(self):
-        # TODO: Implement.
+        self.pdf = PyPDF2
         pass
 
-    def assign(self, sourceString: str) -> None:
-        # TODO: Implement.
+    def assign(self,sourceString: str) -> None:
+        self.pdf = self.pdf.PdfReader(sourceString)
         pass
         
     def extract(self) -> str:
-        # TODO: Implement.
-        pass
+        AllText = ""
+        for PagePdf in range (len(self.pdf.pages)):
+            Page = self.pdf.pages[PagePdf]
+            AllText += Page.extract_text()
+        return AllText
