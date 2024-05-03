@@ -9,7 +9,7 @@ class iSourceTextExtractor(ABC):
     """
 
     @abstractmethod
-    def assign(sourceString : str) -> None:
+    def assign(self, sourceString : str) -> None:
         """
         Assigns a file location to the extractor
 
@@ -21,7 +21,7 @@ class iSourceTextExtractor(ABC):
         pass
 
     @abstractmethod
-    def extract() -> str:
+    def extract(self) -> str:
         """
         Extracts the text from the previously assigned source.
 

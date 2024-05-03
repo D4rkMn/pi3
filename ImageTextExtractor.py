@@ -1,5 +1,8 @@
 from iSourceTextExtractor import iSourceTextExtractor
 
+import pytesseract
+from PIL import Image
+
 class ImageTextExtractor(iSourceTextExtractor):
     """
     ImageTextExtractor
@@ -8,15 +11,12 @@ class ImageTextExtractor(iSourceTextExtractor):
     """
 
     def __init__(self):
-        # TODO: Implement.
+        self.image : Image = None
         pass
 
-    @staticmethod
-    def assign(sourceString: str) -> None:
-        # TODO: Implement.
-        pass
+    def assign(self, sourceString: str) -> None:
+        self.image = Image.open(sourceString)
         
-    @staticmethod
-    def extract() -> str:
-        # TODO: Implement.
-        pass
+    def extract(self) -> str:
+        text = pytesseract.image_to_string(self.image)
+        return text

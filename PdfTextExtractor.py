@@ -11,10 +11,10 @@ class PdfTextExtractor(iSourceTextExtractor):
         # TODO: Implement.
         pass
 
-    def assign(sourceString: str) -> None:
+    def assign(self, sourceString: str) -> None:
         # TODO: Implement.
         pass
         
-    def extract() -> str:
+    def extract(self) -> str:
         # TODO: Implement.
         pass
