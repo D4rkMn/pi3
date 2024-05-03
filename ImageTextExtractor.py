@@ -12,7 +12,6 @@ class ImageTextExtractor(iSourceTextExtractor):
 
     def __init__(self):
         self.image : Image = None
-        pass
 
     def assign(self, sourceString: str) -> None:
         self.image = Image.open(sourceString)
