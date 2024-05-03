@@ -1,5 +1,6 @@
 from iSourceTextExtractor import iSourceTextExtractor
-import PyPDF2
+from PyPDF2 import PdfReader
+
 class PdfTextExtractor(iSourceTextExtractor):
     """
     PdfTextExtractor
@@ -8,11 +9,11 @@ class PdfTextExtractor(iSourceTextExtractor):
     """
 
     def __init__(self):
-        self.pdf = PyPDF2
+        self.pdf : PdfReader = None
         pass
 
-    def assign(self,sourceString: str) -> None:
-        self.pdf = self.pdf.PdfReader(sourceString)
+    def assign(self, sourceString: str) -> None:
+        self.pdf = PdfReader(sourceString)
         pass
         
     def extract(self) -> str:

@@ -17,5 +17,6 @@ class ImageTextExtractor(iSourceTextExtractor):
         self.image = Image.open(sourceString)
         
     def extract(self) -> str:
-        text = pytesseract.image_to_string(self.image)
+        text : str = pytesseract.image_to_string(self.image)
+        text = text.replace(" ", "\n")
         return text
