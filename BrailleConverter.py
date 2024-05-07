@@ -20,6 +20,7 @@ class BrailleConverter:
         """
 
         # TODO: Implement.
+        
         pass
 
     @staticmethod
