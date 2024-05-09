@@ -23,4 +23,7 @@ class PdfTextExtractor(iSourceTextExtractor):
             TextWithLineBreaks = Page.extract_text() 
             AllText += re.sub(r'\n',' ', TextWithLineBreaks)
 
+        # si el pdf se considera "invalido", tiras un ValueError
+        # raise ValueError("texto de ejemplo. pon algun texto debug bonito")
+
         return AllText

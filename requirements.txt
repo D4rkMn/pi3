@@ -1,3 +1,4 @@
+pandas==2.2.2
 Pillow==10.3.0
 PyPDF2==3.0.1
 Pyphen==0.15.0
