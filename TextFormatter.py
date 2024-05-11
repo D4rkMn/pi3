@@ -81,15 +81,12 @@ class TextFormatter:
                 syllableOfText = TextFormatter.__splitInSyllables(text[i])
                 for j in range (len(syllableOfText)):
                     #ayuda
-                    print("parte no normal: " + syllableOfText[j]  + " num: " + str(brailleType[i][1]) + " index: " + str(indexProtoboardSize) )
                     wordSize = sum(1 for caracter in syllableOfText[j] if caracter.isupper())
                     if(syllableOfText[j].isdigit()):
                         wordSize = 1
                     if(wordSize + indexProtoboardSize + len(syllableOfText[j]) <= PROTOBOARD_SIZE - 2):
-
                         TextLine += syllableOfText[j]
                         indexProtoboardSize += len(syllableOfText[j]) + wordSize
-                        indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
                     elif(j==0):
                         TextLine +='\n'
                         TextLine += syllableOfText[j]
@@ -98,13 +95,13 @@ class TextFormatter:
                         TextLine += '-'
                         TextLine += '\n'
                         TextLine += syllableOfText[j]
-                        indexProtoboardSize += (1 + (len(syllableOfText[j]))) + wordSize
-                        indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
-                    print("Mayus: " + str(wordSize))
-                if(indexProtoboardSize + wordSize < PROTOBOARD_SIZE - 1):
+                        indexProtoboardSize = ((len(syllableOfText[j]))) + wordSize
+                    print("parte no normal: " + syllableOfText[j]  + " num: " + str(brailleType[i][1]) + " index: " + str(indexProtoboardSize) )
+                if(indexProtoboardSize < PROTOBOARD_SIZE - 1):
                     TextLine += " "
-                    indexProtoboardSize +=1
-                indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
+                    print("index + 1")
+                    indexProtoboardSize += 1
+                indexProtoboardSize %= (PROTOBOARD_SIZE)
                 print("indice: "+ str(indexProtoboardSize) + " silaba: " + syllableOfText[j])
         print(TextLine)
                         
