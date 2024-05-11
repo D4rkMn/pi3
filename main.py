@@ -4,7 +4,7 @@ from TextFormatter import TextFormatter
 if __name__ == "__main__":
 
     # TODO: fix this test case
-    string = "esta es una, prueba."
+    string = "Probando aca un texto en maximo 10 caracteres palabra233 sd 434343"
     test = TextFormatter.format(string)
     print(test)
 

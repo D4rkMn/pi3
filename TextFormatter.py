@@ -65,12 +65,12 @@ class TextFormatter:
         TextLine = ""
         for i in range (len(text)):
             wordSize = len(text[i])
-            if(brailleType[i][0]): wordSize += brailleType[i][0]
-            if(brailleType[i][1] > 0): wordSize += brailleType[i][1]
+            wordSize += brailleType[i][0]
+            wordSize += brailleType[i][1] 
+            print("Parte normal: " + text[i] + " index: " + str(indexProtoboardSize) + " extra: " + str(brailleType[i][1]))
             if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE - 1):
                 indexProtoboardSize += wordSize
                 TextLine += text[i]
-                print("Parte normal: " + text[i] + " index: " + str(indexProtoboardSize))
                 if(indexProtoboardSize < PROTOBOARD_SIZE - 1):
                     TextLine += " "
                     indexProtoboardSize += 1
@@ -79,27 +79,29 @@ class TextFormatter:
                     indexProtoboardSize = 0
             else:
                 syllableOfText = TextFormatter.__splitInSyllables(text[i])
-                print(syllableOfText)
-                
                 for j in range (len(syllableOfText)):
                     #ayuda
-                    MayusSyllable = sum(1 for caracter in syllableOfText[j] if caracter.isupper())
-                    if(MayusSyllable + indexProtoboardSize + len(syllableOfText[j]) <= PROTOBOARD_SIZE - 2):
+                    print("parte no normal: " + syllableOfText[j]  + " num: " + str(brailleType[i][1]) + " index: " + str(indexProtoboardSize) )
+                    wordSize = sum(1 for caracter in syllableOfText[j] if caracter.isupper())
+                    if(syllableOfText[j].isdigit()):
+                        wordSize = 1
+                    if(wordSize + indexProtoboardSize + len(syllableOfText[j]) <= PROTOBOARD_SIZE - 2):
+
                         TextLine += syllableOfText[j]
-                        indexProtoboardSize += len(syllableOfText[j]) + MayusSyllable
+                        indexProtoboardSize += len(syllableOfText[j]) + wordSize
                         indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
                     elif(j==0):
                         TextLine +='\n'
                         TextLine += syllableOfText[j]
-                        indexProtoboardSize = len(syllableOfText[j]) + MayusSyllable
+                        indexProtoboardSize = len(syllableOfText[j]) + wordSize
                     else:
                         TextLine += '-'
                         TextLine += '\n'
                         TextLine += syllableOfText[j]
-                        indexProtoboardSize += (1 + (len(syllableOfText[j]))) + MayusSyllable
+                        indexProtoboardSize += (1 + (len(syllableOfText[j]))) + wordSize
                         indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
-                    print("Mayus: " + str(MayusSyllable))
-                if(indexProtoboardSize + MayusSyllable < PROTOBOARD_SIZE - 1):
+                    print("Mayus: " + str(wordSize))
+                if(indexProtoboardSize + wordSize < PROTOBOARD_SIZE - 1):
                     TextLine += " "
                     indexProtoboardSize +=1
                 indexProtoboardSize %= (PROTOBOARD_SIZE - 1)
@@ -125,17 +127,10 @@ class TextFormatter:
         brailleType = [[0] * 2 for _ in range (len(textSplit)) ]
                   
         for i in range(len(textSplit)):
-            try:
-                decimalText = float(textSplit[i])
-                decimalTextBool = True
-            except:
-                decimalTextBool = False
             digitInWord = sum(1 for caracter in textSplit[i] if caracter.isdigit())
             MayusInWord = sum(1 for caracter in textSplit[i] if caracter.isupper())
-            if(MayusInWord>0):
-                brailleType[i][0] += MayusInWord
-            if(textSplit[i].isdigit() | decimalTextBool):
-                brailleType[i][1] += digitInWord   
+            brailleType[i][0] += MayusInWord
+            brailleType[i][1] += digitInWord   
         TextComplete = TextFormatter.__formatProtoboard(textSplit,brailleType)
         return (textSplit,brailleType)
     
