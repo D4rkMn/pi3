@@ -33,7 +33,7 @@ class TextFormatter:
 
     @staticmethod
     def __splitInSyllables(text : str) -> List[str]:
-        substrings : List[str] = re.findall(r'[a-zA-Z]+|\d+', text)
+        substrings : List[str] = re.findall(r'[a-zA-Z]+|\d+|[.,!?]+', text)
         result = []
 
         for substring in substrings:
