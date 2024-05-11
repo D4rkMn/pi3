@@ -8,15 +8,15 @@ class BrailleConverter:
     """
 
     @staticmethod
-    def generateFromChar(inputChar : str) -> int:
+    def generateFromChar(inputChar : str) -> List[int]:
         """
-        Generates a braille int from a given char.
+        Generates a braille int list from a given char.
 
         Args:
             inputChar: String that represents a char to be converted.
 
         Returns:
-            Integer representing the braille value.
+            List of integers representing the braille value.
         """
 
         # TODO: Implement.
@@ -38,7 +38,9 @@ class BrailleConverter:
         result : List[int] = []
 
         for char in inputString:
-            brailleInt : int = BrailleConverter.generateFromChar(char)
-            result.append(brailleInt)
+            brailleIntList : List[int] = BrailleConverter.generateFromChar(char)
+            
+            for brailleInt in brailleIntList:
+                result.append(brailleInt)
         
         return result

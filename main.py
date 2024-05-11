@@ -5,8 +5,8 @@ if __name__ == "__main__":
     with open("test.txt", "w") as f:
 
         # Image Case:
-        #sourceString = "strassen.jpg"
-        sourceString = "imagen_invalida.jpg" # ejemplo de imagen invalida
+        sourceString = "strassen.jpg"
+        #sourceString = "b.jpg" # ejemplo de imagen invalida
         extractor = TextExtractorFactory.create("Image")
         extractor.assign(sourceString)
 

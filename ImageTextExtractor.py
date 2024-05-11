@@ -6,7 +6,7 @@ from PIL import Image
 from pandas import DataFrame
 
 # minimum confidence of the overall image, else it will block the image
-CONFIDENCE_THRESHOLD = 50
+CONFIDENCE_THRESHOLD = 70
 
 # confidence needed per line, else it will be removed
 CONFIDENCE_PER_LINE = 85
@@ -47,7 +47,7 @@ class ImageTextExtractor(iSourceTextExtractor):
             for word in line:
                 s += word + " "
             
-            if confidenceArray.values[i] > 80:
+            if confidenceArray.values[i] > CONFIDENCE_PER_LINE:
                 textResult += s
 
         if len(lineArray.values) <= 0 or textResult.strip() == "":
