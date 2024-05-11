@@ -22,5 +22,4 @@ class PdfTextExtractor(iSourceTextExtractor):
             Page = self.pdf.pages[PagePdf]
             TextWithLineBreaks = Page.extract_text() 
             AllText += re.sub(r'\n',' ', TextWithLineBreaks)
-
         return AllText
