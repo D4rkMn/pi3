@@ -3,7 +3,8 @@ from TextFormatter import TextFormatter
 # este main es para testear y debugear. usenlo como sea necesario
 if __name__ == "__main__":
 
-    string = "abc12399xyz456"
+    # TODO: fix this test case
+    string = "esta es una, prueba."
     test = TextFormatter.format(string)
     print(test)
 
