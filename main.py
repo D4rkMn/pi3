@@ -4,7 +4,7 @@ from TextFormatter import TextFormatter
 if __name__ == "__main__":
 
     # TODO: fix this test case
-    string= "ba-se case: --base case--"
+    string= "ba-se case: palabra --base case--"
     test = TextFormatter.format(string)
     print(test)
 

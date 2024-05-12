@@ -22,8 +22,10 @@ class TextFormatter:
 
     @staticmethod
     def __formatWordString(text : str) -> List[str]:
-        textWitHyphen = pyphenInstance.inserted(text,'-')
-        syllableOfText = textWitHyphen.split('-')
+        syllableOfText = text
+        if((text!="--") & (text != "-")):
+            textWitHyphen = pyphenInstance.inserted(text,'-')
+            syllableOfText = textWitHyphen.split('-')
         return syllableOfText
 
     @staticmethod
@@ -33,9 +35,10 @@ class TextFormatter:
 
     @staticmethod
     def __splitInSyllables(text : str) -> List[str]:
-        substrings = re.findall(r'[a-zA-Z]+|\d+|[...,¡!¿?>==<{}"()\[\]]+', text)
+        substrings = re.findall(r'[a-zA-Z]+|\d+|[-...,¡!¿?>==<{}"()\[\]]+', text)
         result = []
-
+        print("ds: ")
+        print(substrings)
         for substring in substrings:
             temp = None
 
