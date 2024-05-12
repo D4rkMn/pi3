@@ -4,7 +4,7 @@ from TextFormatter import TextFormatter
 if __name__ == "__main__":
 
     # TODO: fix this test case
-    string = "Probando, aca, un, texto, en, maximo, 10, caracteres, palabra233, si, 434343"
+    string= "ba-se case: --base case--"
     test = TextFormatter.format(string)
     print(test)
 

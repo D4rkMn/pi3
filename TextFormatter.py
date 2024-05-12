@@ -33,7 +33,7 @@ class TextFormatter:
 
     @staticmethod
     def __splitInSyllables(text : str) -> List[str]:
-        substrings : List[str] = re.findall(r'[a-zA-Z]+|\d+|[.,!?]+', text)
+        substrings = re.findall(r'[a-zA-Z]+|\d+|[...,¡!¿?>==<{}"()\[\]]+', text)
         result = []
 
         for substring in substrings:
@@ -52,9 +52,10 @@ class TextFormatter:
 
     @staticmethod
     def __preProcess(text: str) -> str:
-        for word in text:
-            text = text.replace(CODE_MAYUS,"")
-            text = text.replace(CODE_NUMBER, "")
+        text = text.replace(CODE_MAYUS,"")
+        text = text.replace(CODE_NUMBER, "")
+        text= re.sub(r'(?<!-)-(?!-)',"",text)
+        print(text)
         return text
 
     @staticmethod
@@ -66,12 +67,16 @@ class TextFormatter:
             for character in line:
                 if(indexMaxRange > PROTOBOARD_SIZE):
                     break
+
                 if (character.isupper()):
                     encodeLine += CODE_MAYUS + character.lower()
+
                 elif(character.isdigit()):
                     encodeLine += CODE_NUMBER + character
+
                 else:
                     encodeLine += character
+
                 indexMaxRange += 1
                 
             encodeText.append(encodeLine)
@@ -88,12 +93,15 @@ class TextFormatter:
             if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE - 1):
                 indexProtoboardSize += wordSize
                 TextLine += text[i]
+
                 if(indexProtoboardSize < PROTOBOARD_SIZE - 1):
                     TextLine += " "
                     indexProtoboardSize += 1
+
                 else: 
                     TextLine += '\n' 
                     indexProtoboardSize = 0
+                    
             else:
                 syllableOfText = TextFormatter.__splitInSyllables(text[i])
                 for j in range (len(syllableOfText)):
@@ -102,24 +110,27 @@ class TextFormatter:
                     wordSize = sum(1 for caracter in syllableOfText[j] if caracter.isupper())
                     if(syllableOfText[j].isdigit()):
                         wordSize = 1
+                        
                     if((wordSize + indexProtoboardSize + len(syllableOfText[j]) <= PROTOBOARD_SIZE - 1) | (specialChar & (indexProtoboardSize + 1 <= PROTOBOARD_SIZE))):
                         indexProtoboardSize += len(syllableOfText[j]) + wordSize
+
                     elif(j==0):
                         TextLine +='\n'
                         indexProtoboardSize = len(syllableOfText[j]) + wordSize
+
                     else:
                         TextLine += '-'
                         TextLine += '\n'
                         indexProtoboardSize = ((len(syllableOfText[j]))) + wordSize
+
                     TextLine += syllableOfText[j]
                 if(indexProtoboardSize < PROTOBOARD_SIZE):
                     TextLine += " "
                     indexProtoboardSize += 1
+                    
         totalText = TextLine.splitlines()
         return totalText
                         
-
-
     @staticmethod
     def format(text : str) -> str:
         """
