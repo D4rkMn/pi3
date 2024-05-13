@@ -14,17 +14,20 @@ class BrailleFileGenerator:
     """
     BrailleFileGenerator
 
-    Static class that generates text files containing the given braille integers
+    Static class that generates text files containing the given braille strings
     """
 
     @staticmethod
-    def generateFromList(brailleList : List[int]) -> None:
+    def generate(brailleList : List[List[str]]) -> None:
         """
-        Generates a text file from a given integer list.
+        Generates a text file from a given list of braille strings.
 
         Args:
-            brailleList: List of ints representing the braille characters
+            brailleList: Matrix of strings representing the list of braille strings.
         """
 
-        # TODO: Implement.
-        pass
+        with open("BrailleFile.txt","w") as f:
+            for brailleString in brailleList:
+                for brailleChar in brailleString:
+                    f.write(brailleChar)
+                    f.write("\n")

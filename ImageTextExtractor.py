@@ -1,15 +1,9 @@
+from Global import CONFIDENCE_THRESHOLD, CONFIDENCE_PER_LINE
 from iSourceTextExtractor import iSourceTextExtractor
 
 import pytesseract
 from PIL import Image
-
 from pandas import DataFrame
-
-# minimum confidence of the overall image, else it will block the image
-CONFIDENCE_THRESHOLD = 70
-
-# confidence needed per line, else it will be removed
-CONFIDENCE_PER_LINE = 85
 
 class ImageTextExtractor(iSourceTextExtractor):
     """

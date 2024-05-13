@@ -1,13 +1,15 @@
-from typing import List,Tuple
+from typing import List
 from pyphen import Pyphen
 import re
 
-CODE_MAYUS = "֍"
-CODE_NUMBER = "߷"
+# Number of Braille Characters to display on the protobard
 PROTOBOARD_SIZE = 10
+# Prefix for uppercase characters
+CODE_MAYUS = "֍"
+# Prefix for numerical character
+CODE_NUMBER = "߷"
 
 pyphenInstance = Pyphen(lang = "es")
-
 
 class TextFormatter:
     """
@@ -15,10 +17,6 @@ class TextFormatter:
 
     Static class that converts given strings into the correct format for the braille device. 
     """
-
-    @staticmethod
-    def setLanguage(lang : str) -> None:
-        pyphenInstance = Pyphen(lang = lang)
 
     @staticmethod
     def __formatWordString(text : str) -> List[str]:
@@ -40,18 +38,22 @@ class TextFormatter:
         print("ds: ")
         print(substrings)
         for substring in substrings:
-            temp = None
+            splitSubstring = None
 
             if substring.isnumeric():
-                temp = TextFormatter.__formatNumberString(substring)
+                splitSubstring = TextFormatter.__formatNumberString(substring)
 
             else:
-                temp = TextFormatter.__formatWordString(substring)
+                splitSubstring = TextFormatter.__formatWordString(substring)
 
-            result.extend(temp)
+            result.extend(splitSubstring)
 
         print(f"split string: {result}")
         return result
+
+    @staticmethod
+    def __emergencySplit(string : str) -> List[str]:
+        return [string[i : i + PROTOBOARD_SIZE - 1] + "-" for i in range(0, len(string), PROTOBOARD_SIZE - 1)]
 
     @staticmethod
     def __preProcess(text: str) -> str:
@@ -81,8 +83,15 @@ class TextFormatter:
                     encodeLine += character
 
                 indexMaxRange += 1
-                
-            encodeText.append(encodeLine)
+
+            if len(encodeLine) > PROTOBOARD_SIZE:
+                print(f"calling emergency split for line {line}")
+                emergencyLines = TextFormatter.__emergencySplit(encodeLine)
+                print(f"emergency lines: {emergencyLines}")
+                encodeText.extend(emergencyLines)
+            
+            else:
+                encodeText.append(encodeLine)
 
         return encodeText
     
