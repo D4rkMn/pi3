@@ -35,8 +35,6 @@ class TextFormatter:
     def __splitInSyllables(text : str) -> List[str]:
         substrings = re.findall(r'[a-zA-Z]+|\d+|[-...,¡!¿?>==<{}"()\[\]]+', text)
         result = []
-        print("ds: ")
-        print(substrings)
         for substring in substrings:
             splitSubstring = None
 
@@ -53,7 +51,14 @@ class TextFormatter:
 
     @staticmethod
     def __emergencySplit(string : str) -> List[str]:
-        return [string[i : i + PROTOBOARD_SIZE - 1] + "-" for i in range(0, len(string), PROTOBOARD_SIZE - 1)]
+        result = []
+        for i in range(0,len(string),PROTOBOARD_SIZE - 1):
+            substring = string[i: i + PROTOBOARD_SIZE - 1]
+            substring += "-"
+            while(len(substring) < PROTOBOARD_SIZE - 1):
+                substring += " "
+            result.append(substring)
+        return result
 
     @staticmethod
     def __preProcess(text: str) -> str:
@@ -69,10 +74,9 @@ class TextFormatter:
         for line in text:
             encodeLine = ""
             indexMaxRange = 1
-            for character in line:
+            for character in line: 
                 if(indexMaxRange > PROTOBOARD_SIZE):
                     break
-
                 if (character.isupper()):
                     encodeLine += CODE_MAYUS + character.lower()
 
@@ -81,7 +85,10 @@ class TextFormatter:
 
                 else:
                     encodeLine += character
+                indexMaxRange += 1
 
+            while(indexMaxRange <= PROTOBOARD_SIZE):
+                encodeLine += " "
                 indexMaxRange += 1
 
             if len(encodeLine) > PROTOBOARD_SIZE:
