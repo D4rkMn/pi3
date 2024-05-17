@@ -16,7 +16,7 @@ if __name__ == "__main__":
     f = open("test.txt","w")
     f.write(text)
     f.close()
-    text= "a AAAAAAAAAAAAAA nose"
+    text= "a aaaaaaaaaaa nose"
     # Convert to braille and store output in "BrailleFile.txt"
     splitString = TextFormatter.format(text)
     print(splitString)

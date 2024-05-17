@@ -75,8 +75,6 @@ class TextFormatter:
             encodeLine = ""
             indexMaxRange = 1
             for character in line: 
-                if(indexMaxRange > PROTOBOARD_SIZE):
-                    break
                 if (character.isupper()):
                     encodeLine += CODE_MAYUS + character.lower()
 
