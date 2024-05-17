@@ -55,7 +55,7 @@ class TextFormatter:
         for i in range(0,len(string),PROTOBOARD_SIZE - 1):
             substring = string[i: i + PROTOBOARD_SIZE - 1]
             substring += "-"
-            while(len(substring) < PROTOBOARD_SIZE - 1):
+            while(len(substring) < PROTOBOARD_SIZE ):
                 substring += " "
             result.append(substring)
         return result
