@@ -55,9 +55,6 @@ class TextFormatter:
         for i in range(0,len(string),PROTOBOARD_SIZE - 1):
             substring = string[i: i + PROTOBOARD_SIZE - 1]
             substring += "-"
-            while(len(substring) < PROTOBOARD_SIZE ):
-                substring += " "
-            result.append(substring)
         return result
 
     @staticmethod
@@ -85,10 +82,6 @@ class TextFormatter:
                     encodeLine += character
                 indexMaxRange += 1
 
-            while(indexMaxRange <= PROTOBOARD_SIZE):
-                encodeLine += " "
-                indexMaxRange += 1
-
             if len(encodeLine) > PROTOBOARD_SIZE:
                 print(f"calling emergency split for line {line}")
                 emergencyLines = TextFormatter.__emergencySplit(encodeLine)
@@ -107,7 +100,7 @@ class TextFormatter:
             wordSize = len(text[i])
             wordSize += brailleType[i][0]
             wordSize += brailleType[i][1] 
-            if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE - 1):
+            if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE):
                 indexProtoboardSize += wordSize
                 TextLine += text[i]
 
@@ -141,10 +134,11 @@ class TextFormatter:
                         indexProtoboardSize = ((len(syllableOfText[j]))) + wordSize
 
                     TextLine += syllableOfText[j]
+                
                 if(indexProtoboardSize < PROTOBOARD_SIZE):
                     TextLine += " "
                     indexProtoboardSize += 1
-                    
+                print(indexProtoboardSize)    
         totalText = TextLine.splitlines()
         return totalText
                         
@@ -171,5 +165,11 @@ class TextFormatter:
             brailleType[i][1] += digitInWord   
         protoboardText = TextFormatter.__formatProtoboard(textSplit,brailleType)
         brailleConverterText = TextFormatter.__encodeFormatProtoboard(protoboardText)
+        for i in range(len(brailleConverterText)):
+            indexMaxRange = len(brailleConverterText[i])
+            while(indexMaxRange<PROTOBOARD_SIZE):
+                brailleConverterText[i]+=" "
+                indexMaxRange+=1
         return (brailleConverterText)
+    
     
