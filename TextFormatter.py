@@ -35,8 +35,6 @@ class TextFormatter:
     def __splitInSyllables(text : str) -> List[str]:
         substrings = re.findall(r'[a-zA-Z]+|\d+|[-...,¡!¿?>==<{}"()\[\]]+', text)
         result = []
-        print("ds: ")
-        print(substrings)
         for substring in substrings:
             splitSubstring = None
 
@@ -53,7 +51,11 @@ class TextFormatter:
 
     @staticmethod
     def __emergencySplit(string : str) -> List[str]:
-        return [string[i : i + PROTOBOARD_SIZE - 1] + "-" for i in range(0, len(string), PROTOBOARD_SIZE - 1)]
+        result = []
+        for i in range(0,len(string),PROTOBOARD_SIZE - 1):
+            substring = string[i: i + PROTOBOARD_SIZE - 1]
+            substring += "-"
+        return result
 
     @staticmethod
     def __preProcess(text: str) -> str:
@@ -69,10 +71,7 @@ class TextFormatter:
         for line in text:
             encodeLine = ""
             indexMaxRange = 1
-            for character in line:
-                if(indexMaxRange > PROTOBOARD_SIZE):
-                    break
-
+            for character in line: 
                 if (character.isupper()):
                     encodeLine += CODE_MAYUS + character.lower()
 
@@ -81,7 +80,6 @@ class TextFormatter:
 
                 else:
                     encodeLine += character
-
                 indexMaxRange += 1
 
             if len(encodeLine) > PROTOBOARD_SIZE:
@@ -102,7 +100,7 @@ class TextFormatter:
             wordSize = len(text[i])
             wordSize += brailleType[i][0]
             wordSize += brailleType[i][1] 
-            if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE - 1):
+            if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE):
                 indexProtoboardSize += wordSize
                 TextLine += text[i]
 
@@ -136,10 +134,11 @@ class TextFormatter:
                         indexProtoboardSize = ((len(syllableOfText[j]))) + wordSize
 
                     TextLine += syllableOfText[j]
+                
                 if(indexProtoboardSize < PROTOBOARD_SIZE):
                     TextLine += " "
                     indexProtoboardSize += 1
-                    
+                print(indexProtoboardSize)    
         totalText = TextLine.splitlines()
         return totalText
                         
@@ -166,5 +165,11 @@ class TextFormatter:
             brailleType[i][1] += digitInWord   
         protoboardText = TextFormatter.__formatProtoboard(textSplit,brailleType)
         brailleConverterText = TextFormatter.__encodeFormatProtoboard(protoboardText)
+        for i in range(len(brailleConverterText)):
+            indexMaxRange = len(brailleConverterText[i])
+            while(indexMaxRange<PROTOBOARD_SIZE):
+                brailleConverterText[i]+=" "
+                indexMaxRange+=1
         return (brailleConverterText)
+    
     
