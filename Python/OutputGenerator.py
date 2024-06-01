@@ -1,10 +1,5 @@
 from typing import List
-
-from TextExtractorFactory import TextExtractorFactory
-from BrailleConverter import BrailleConverter
-
 from serial import Serial
-import time
 
 class OutputGenerator:
     """
@@ -55,13 +50,15 @@ class OutputGenerator:
         for brailleString in brailleList:
             for brailleChar in brailleString:
                 for bit in brailleChar:
-                    print(f"reading {bit}")
-                    
-                    for _ in range(5):
-                        if bit == '0':
-                            arduino.write(b'0')
-                        else:
-                            arduino.write(b'1')
-                        time.sleep(0.5)
+                
+                    if bit == "0":
+                        arduino.write(b"0")
+                    else:
+                        arduino.write(b"1")                    
+                        
+                    while True:
+                        rawString = arduino.readline()
+                        if rawString == b"next\r\n":
+                            break
                         
         arduino.close()

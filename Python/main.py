@@ -17,16 +17,22 @@ if __name__ == "__main__":
     #f.write(text)
     #f.close()
     
+    # Sample text
     text= "Probando texto para el protoboard en Python"
-    # Convert to braille and store output in "BrailleFile.txt"
-    splitString = TextFormatter.format(text)
     
+    # Format text and covert to braille 
+    splitString = TextFormatter.format(text)
     brailleList = BrailleConverter.generateFromList(splitString)
 
+    # Define the ports 
     usbPort = "COM3"
     serialPort = 9600
+    
+    # Create the output generator
     outputGenerator = OutputGenerator()
     outputGenerator.assignSerialPort(serialPort)
     outputGenerator.assignUsbPort(usbPort)
     
+    # Output test
+    print(brailleList)
     outputGenerator.generate(brailleList)
