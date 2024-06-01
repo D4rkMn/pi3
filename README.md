@@ -1,5 +1,3 @@
-# pi3
-los visionarios
-Producto para ciegos :)
+# Los Visionarios
 
-ya fue ya
+Avance de conexión de Python a Arduino utilizando Pyserial en el archivo "OutputGenerator.py" dentro de la carpeta Python. Avance del Arduino en la carpeta Arduino.
