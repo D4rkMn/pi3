@@ -32,12 +32,26 @@ if __name__ == "__main__":
         f.write("\n\n")
         f.write(pdfText)
 
+    input("Output en test.txt.\nPresione enter para continuar...")
+
     # Probando con un texto mas pequeño para el ESP32
     text = "Probando texto para el protoboard en Python"
-    
-    # Formateamos el texto y lo covertimos a Braille 
+
+    # Le damos el formato adecuado al texto
     splitString = TextFormatter.format(text)
+
+    # Imprimos el string formateada para probar su funcionamiento correcto
+    for string in splitString:
+        print(string)
+    print()
+
+    input("Presione enter para continuar...")
+
+    # Convertimos el texto formateado a Braille y lo imprimimos
     brailleList = BrailleConverter.generateFromList(splitString)
+    print(brailleList)
+
+    input("Presione enter para continuar...")
 
     # Definimos los puertos para la placa 
     usbPort = "COM3"
@@ -49,5 +63,4 @@ if __name__ == "__main__":
     outputGenerator.assignUsbPort(usbPort)
     
     # Output test
-    print(brailleList)
     outputGenerator.generate(brailleList)
