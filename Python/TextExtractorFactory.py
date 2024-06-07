@@ -15,7 +15,7 @@ class TextExtractorFactory:
         Creates a text extractor from a given provider string.
 
         Args:
-            extractProvider: String to identify the type of provider to be created. 
+            extractProvider: String to identify the type of provider to be created (Image or Pdf). 
         
         Returns:
             The created text extractor.
