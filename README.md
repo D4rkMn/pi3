@@ -1,3 +1,5 @@
 # Los Visionarios
 
-Avance de conexión de Python a Arduino utilizando Pyserial en el archivo "OutputGenerator.py" dentro de la carpeta Python. Avance del Arduino en la carpeta Arduino.
+entra a la carpeta Pagina. alli esta todo lo basico que hice. alli habra un readme mas detallado que este.
+
+cuando acabes con esto, haz merge de esto con el branch principal
