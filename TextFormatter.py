@@ -3,7 +3,7 @@ from pyphen import Pyphen
 import re
 
 # Number of Braille Characters to display on the protobard
-PROTOBOARD_SIZE = 10
+PROTOBOARD_SIZE = 6
 # Prefix for uppercase characters
 CODE_MAYUS = "֍"
 # Prefix for numerical character
@@ -54,7 +54,10 @@ class TextFormatter:
         result = []
         for i in range(0,len(string),PROTOBOARD_SIZE - 1):
             substring = string[i: i + PROTOBOARD_SIZE - 1]
-            substring += "-"
+            if(len(string) >= (PROTOBOARD_SIZE + i)):
+                substring += "-"
+            result.append(substring)
+        
         return result
 
     @staticmethod
@@ -62,15 +65,16 @@ class TextFormatter:
         text = text.replace(CODE_MAYUS,"")
         text = text.replace(CODE_NUMBER, "")
         text= re.sub(r'(?<!-)-(?!-)',"",text)
-        print(text)
         return text
 
     @staticmethod
     def __encodeFormatProtoboard(text: List[str]) -> List[str]:
         encodeText = []
+        print("pre: " + str(text))
         for line in text:
             encodeLine = ""
-            indexMaxRange = 1
+            if not line:
+                continue
             for character in line: 
                 if (character.isupper()):
                     encodeLine += CODE_MAYUS + character.lower()
@@ -80,14 +84,11 @@ class TextFormatter:
 
                 else:
                     encodeLine += character
-                indexMaxRange += 1
-
             if len(encodeLine) > PROTOBOARD_SIZE:
                 print(f"calling emergency split for line {line}")
                 emergencyLines = TextFormatter.__emergencySplit(encodeLine)
                 print(f"emergency lines: {emergencyLines}")
-                encodeText.extend(emergencyLines)
-            
+                encodeText.extend(emergencyLines)            
             else:
                 encodeText.append(encodeLine)
 
@@ -103,7 +104,6 @@ class TextFormatter:
             if(indexProtoboardSize + wordSize <= PROTOBOARD_SIZE):
                 indexProtoboardSize += wordSize
                 TextLine += text[i]
-
                 if(indexProtoboardSize < PROTOBOARD_SIZE - 1):
                     TextLine += " "
                     indexProtoboardSize += 1
@@ -132,13 +132,11 @@ class TextFormatter:
                         TextLine += '-'
                         TextLine += '\n'
                         indexProtoboardSize = ((len(syllableOfText[j]))) + wordSize
-
                     TextLine += syllableOfText[j]
                 
                 if(indexProtoboardSize < PROTOBOARD_SIZE):
                     TextLine += " "
                     indexProtoboardSize += 1
-                print(indexProtoboardSize)    
         totalText = TextLine.splitlines()
         return totalText
                         
@@ -155,14 +153,13 @@ class TextFormatter:
         """
         text = TextFormatter.__preProcess(text)
         textSplit = text.split()
-        
         brailleType = [[0] * 2 for _ in range (len(textSplit)) ]
                   
         for i in range(len(textSplit)):
             digitInWord = sum(1 for caracter in textSplit[i] if caracter.isdigit())
             MayusInWord = sum(1 for caracter in textSplit[i] if caracter.isupper())
             brailleType[i][0] += MayusInWord
-            brailleType[i][1] += digitInWord   
+            brailleType[i][1] += digitInWord  
         protoboardText = TextFormatter.__formatProtoboard(textSplit,brailleType)
         brailleConverterText = TextFormatter.__encodeFormatProtoboard(protoboardText)
         for i in range(len(brailleConverterText)):
