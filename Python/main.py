@@ -35,7 +35,7 @@ if __name__ == "__main__":
     input("Output en test.txt.\nPresione enter para continuar...")
 
     # Probando con un texto mas pequeño para el ESP32
-    text = "Probando texto para el protoboard en Python"
+    text = "Probando texto AAAA para el protoboard en Python"
 
     # Le damos el formato adecuado al texto
     splitString = TextFormatter.format(text)
