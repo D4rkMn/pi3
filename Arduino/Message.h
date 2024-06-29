@@ -26,6 +26,15 @@ public:
       return bits[n];
     }
 
+    void print() const {
+      char result[Global::NUMBER_OF_LEDS+1];
+      for (int i = 0; i < Global::NUMBER_OF_LEDS; i++) {
+        result[i] = bits[i] ? '1' : '0';
+      }
+      result[Global::NUMBER_OF_LEDS] = '\0';
+      Serial.printf("message: %s\n", result);
+    }
+
 };
 
 #endif

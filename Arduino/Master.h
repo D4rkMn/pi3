@@ -12,7 +12,7 @@
 class Master {
 private:
 
-  Addressable* tempContainer[Global::MAX_SLAVES];
+  Addressable* tempContainer[Global::NUMBER_OF_SLAVES];
   Vector<Addressable*> slaves;
   esp_now_peer_info_t peerInfo = {};
 
@@ -41,30 +41,25 @@ public:
     slaves.push_back(slave);
   }
 
-  void notifySlaves(const Message& message) {
-    for (auto slave : slaves) {
-      notifySlave(slave, message);
+  // Given a message array, it will be distributed to the slaves
+  // 
+  // Message array should be the same size as the number of slaves
+  void notifySlaves(const Message* messageArray) {
+    for (int i = 0; i < Global::NUMBER_OF_SLAVES; i++) {
+      notifySlave(slaves[i], messageArray[i]);
     }
   }
 
   void notifySlave(Addressable* slave, const Message& message) {
     const uint8_t* macAddress = slave->getMacAddress();
-    slave->printMacAddress();
-
-    Serial.printf("message: %d\n", message.getBit(0));
+    //slave->printMacAddress();
+    message.print();
 
     esp_err_t result = esp_now_send(macAddress, (uint8_t*) &message, sizeof(message));
 
-    /*if (result == ESP_OK) {
-      Serial.println("Sent with success");
-    }
-    else {
-      Serial.println("Error sending data");
-    }*/
-
     switch (result) {
       case ESP_OK:
-        Serial.println("ok");
+        //Serial.println("ok");
         break;
       case ESP_ERR_ESPNOW_NOT_INIT:
         Serial.println("not init");
