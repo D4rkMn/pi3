@@ -50,7 +50,6 @@ class OutputGenerator:
         for brailleString in brailleList:
             for brailleChar in brailleString:
                 for bit in brailleChar:
-                
                     if bit == "0":
                         arduino.write(b"0")
                     else:
@@ -59,6 +58,5 @@ class OutputGenerator:
                     while True:
                         rawString = arduino.readline()
                         if rawString == b"next\r\n":
-                            break
-                        
+                            break  
         arduino.close()

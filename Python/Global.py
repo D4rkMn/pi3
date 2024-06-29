@@ -1,4 +1,4 @@
-from TextFormatter import Pyphen, pyphenInstance
+from Python.TextFormatter import Pyphen, pyphenInstance
 
 
 # Language of the device

@@ -1,5 +1,5 @@
-from Global import CONFIDENCE_THRESHOLD, CONFIDENCE_PER_LINE
-from iSourceTextExtractor import iSourceTextExtractor
+from Python.Global import CONFIDENCE_THRESHOLD, CONFIDENCE_PER_LINE
+from Python.iSourceTextExtractor import iSourceTextExtractor
 
 import pytesseract
 from PIL import Image

@@ -1,5 +1,5 @@
-from TextFormatter import CODE_MAYUS, CODE_NUMBER
-from Global import Global
+from Python.TextFormatter import CODE_MAYUS, CODE_NUMBER, PROTOBOARD_SIZE
+from Python.Global import Global
 
 from typing import List
 
@@ -176,7 +176,10 @@ class BrailleConverter:
         result : List[str] = []
 
         for brailleChar in inputString:
-            brailleString = BrailleConverter.generateFromChar(brailleChar)
+            try: 
+                brailleString = BrailleConverter.generateFromChar(brailleChar)
+            except:
+                brailleString = ["0"*PROTOBOARD_SIZE]
             result.append(brailleString)
         
         return result

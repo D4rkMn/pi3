@@ -1,4 +1,4 @@
-from iSourceTextExtractor import iSourceTextExtractor
+from Python.iSourceTextExtractor import iSourceTextExtractor
 from PyPDF2 import PdfReader
 import re
 class PdfTextExtractor(iSourceTextExtractor):

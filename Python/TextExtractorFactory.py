@@ -1,6 +1,6 @@
-from iSourceTextExtractor import iSourceTextExtractor
-from ImageTextExtractor import ImageTextExtractor
-from PdfTextExtractor import PdfTextExtractor
+from Python.iSourceTextExtractor import iSourceTextExtractor
+from Python.ImageTextExtractor import ImageTextExtractor
+from Python.PdfTextExtractor import PdfTextExtractor
 
 class TextExtractorFactory:
     """

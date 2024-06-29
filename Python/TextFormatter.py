@@ -46,7 +46,6 @@ class TextFormatter:
 
             result.extend(splitSubstring)
 
-        print(f"split string: {result}")
         return result
 
     @staticmethod
@@ -70,7 +69,6 @@ class TextFormatter:
     @staticmethod
     def __encodeFormatProtoboard(text: List[str]) -> List[str]:
         encodeText = []
-        print("pre: " + str(text))
         for line in text:
             encodeLine = ""
             if not line:
@@ -85,9 +83,7 @@ class TextFormatter:
                 else:
                     encodeLine += character
             if len(encodeLine) > PROTOBOARD_SIZE:
-                print(f"calling emergency split for line {line}")
                 emergencyLines = TextFormatter.__emergencySplit(encodeLine)
-                print(f"emergency lines: {emergencyLines}")
                 encodeText.extend(emergencyLines)            
             else:
                 encodeText.append(encodeLine)
