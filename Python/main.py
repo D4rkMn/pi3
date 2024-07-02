@@ -40,6 +40,7 @@ if __name__ == "__main__":
 
     # Probando con un texto mas pequeño para el ESP32
     text = pdfText
+    text = "Probando texto AAAA para el protoboard en Python"
 
     # Le damos el formato adecuado al texto
     splitString = TextFormatter.format(text)

@@ -3,7 +3,7 @@ from pyphen import Pyphen
 import re
 
 # Number of Braille Characters to display on the protobard
-PROTOBOARD_SIZE = 10
+PROTOBOARD_SIZE = 6
 # Prefix for uppercase characters
 CODE_MAYUS = "֍"
 # Prefix for numerical character
@@ -57,6 +57,10 @@ class TextFormatter:
                 substring += "-"
             result.append(substring)
         
+            if(len(string) >= (PROTOBOARD_SIZE + i)):
+                substring += "-"
+            result.append(substring)
+        
         return result
 
     @staticmethod
@@ -69,8 +73,11 @@ class TextFormatter:
     @staticmethod
     def __encodeFormatProtoboard(text: List[str]) -> List[str]:
         encodeText = []
+        print("pre: " + str(text))
         for line in text:
             encodeLine = ""
+            if not line:
+                continue
             if not line:
                 continue
             for character in line: 
@@ -155,6 +162,7 @@ class TextFormatter:
             digitInWord = sum(1 for caracter in textSplit[i] if caracter.isdigit())
             MayusInWord = sum(1 for caracter in textSplit[i] if caracter.isupper())
             brailleType[i][0] += MayusInWord
+            brailleType[i][1] += digitInWord  
             brailleType[i][1] += digitInWord  
         protoboardText = TextFormatter.__formatProtoboard(textSplit,brailleType)
         brailleConverterText = TextFormatter.__encodeFormatProtoboard(protoboardText)
