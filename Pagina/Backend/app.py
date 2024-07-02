@@ -1,18 +1,18 @@
 import os
-
+import sys
+sys.path.append('../../')
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 from BrailleWrapper import procesarArchivo
-
-UPLOAD_FOLDER = 'Python/Input'
-TEMPLATE_LOCATION = 'Pagina/Frontend/templates'
+UPLOAD_FOLDER = '../../Python/Input'
+TEMPLATE_LOCATION = '../Frontend/templates'
 
 app = Flask(__name__, template_folder=TEMPLATE_LOCATION)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 @app.route('/')
 def index():
-    print(os.getcwd())
     return render_template('index.html')
 
 @app.route('/script.js')

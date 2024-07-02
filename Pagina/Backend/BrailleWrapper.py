@@ -1,7 +1,8 @@
 from Python.TextExtractorFactory import TextExtractorFactory
 from Python.TextFormatter import TextFormatter
 from Python.BrailleConverter import BrailleConverter
-import os
+import sys
+sys.path.append('../../')
 def procesarArchivo(archivoLocation):
     fileLocation = archivoLocation
     isPdf = fileLocation.endswith('.pdf')
