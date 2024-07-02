@@ -3,7 +3,7 @@ from pyphen import Pyphen
 import re
 
 # Number of Braille Characters to display on the protobard
-PROTOBOARD_SIZE = 6
+PROTOBOARD_SIZE = 10
 # Prefix for uppercase characters
 CODE_MAYUS = "֍"
 # Prefix for numerical character

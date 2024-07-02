@@ -1,16 +1,21 @@
 from Python.TextExtractorFactory import TextExtractorFactory
 from Python.TextFormatter import TextFormatter
 from Python.BrailleConverter import BrailleConverter
+import os
 def procesarArchivo(archivoLocation):
-    pdfLocation = archivoLocation
-
+    fileLocation = archivoLocation
+    isPdf = fileLocation.endswith('.pdf')
+    print("Que es?: " + str(isPdf))
+    if(isPdf):
     # Ejemplo de Pdf:
-    extractor = TextExtractorFactory.create("Pdf")
-    extractor.assign(pdfLocation)
-
+        fileExtractor = TextExtractorFactory.create("Pdf")
+    else:
+    # Ejemplo de Imagen:
+        fileExtractor = TextExtractorFactory.create("Image")
+    fileExtractor.assign(fileLocation)
     # Probando con un texto mas pequeño para el ESP32
-    text = "Probando texto AAAA para el protoboard en Python"
 
+    text = fileExtractor.extract()
     # Le damos el formato adecuado al texto
     splitString = TextFormatter.format(text)
 

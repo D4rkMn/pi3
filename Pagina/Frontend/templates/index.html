@@ -7,17 +7,20 @@
     <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
     <link rel = "stylesheet" filename = "/Pagina/Frontend/style.css">
     <title>WebSocket Client</title>
-
+    
 </head>
 
 <body>
 
     <h1>WebSocket Client</h1>
+    <p> Texto para rellenar jijiji ja (hagan el front)</p>
     <form id="uploadForm" action="upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="application/pdf">
-        <button type="submit">Upload</button>    
+        <section>        
+            <label>Sube archivo o gei </br>
+                <input type="file" name="file" accept=".pdf,image/*" required>
+            </label>
+            <button type="submit">Upload</button>    
+        </section>
     </form>
-
 </body>
-
 </html>

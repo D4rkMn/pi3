@@ -6,17 +6,31 @@ connected_clients = set()
 async def handler(websocket, path):
     connected_clients.add(websocket)
     resultBraille = brailleList
-    index = 1
+    index = 0
+    sendLine=""
+    for character in resultBraille[index]:
+        sendLine += character
+        sendLine += '\n'
+    filtro = False
     async for message in websocket:
         print("Sending resultBraille to client")
         print("Received: " + message)
-        if(message == "left"):
+        print(str(len(brailleList)) + " " + str(index))
+        if(message == "PalabraImposibleDeAdivinar"):
+            filtro =True
+            await websocket.send(sendLine)
+        elif(message == "left" and index>0):
             index -=1
-            
-            print("Pagina: " + str(index))
-        elif message == "right":
+        elif message == "right" and index + 1<len(brailleList):
             index +=1
-            print("Pagina: " + str(index))
+        sendLine = ""
+        for character in resultBraille[index]:
+            sendLine += character
+            sendLine += '\n'
+        if(filtro == False):
+            await websocket.send(sendLine)
+        filtro = False
+        
             
 
 def start_server():
