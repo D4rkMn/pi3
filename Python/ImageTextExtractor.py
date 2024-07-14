@@ -28,10 +28,11 @@ class ImageTextExtractor(iSourceTextExtractor):
             averageConfidence += confidenceArray.values[i]
         
         averageConfidence /= len(confidenceArray.values)
-
-        if averageConfidence < CONFIDENCE_THRESHOLD:
-            raise ValueError("Image given is not of high quality. Please upload another picture.")
-
+        try:
+            if averageConfidence < CONFIDENCE_THRESHOLD:
+                raise ValueError("Image given is not of high quality. Please upload another picture.")
+        except:
+            return ""
         textResult = ""
 
         for i in range(len(lineArray.values)):
@@ -45,8 +46,7 @@ class ImageTextExtractor(iSourceTextExtractor):
                 textResult += s
 
         if len(lineArray.values) <= 0 or textResult.strip() == "":
-            raise ValueError("Image given is not of high quality. Please upload another picture.")
-
+            return ""
         return textResult
 
     def assign(self, sourceString: str) -> None:

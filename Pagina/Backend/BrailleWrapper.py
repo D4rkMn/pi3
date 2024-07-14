@@ -17,16 +17,21 @@ def procesarArchivo(archivoLocation):
     # Probando con un texto mas pequeño para el ESP32
 
     text = fileExtractor.extract()
+    if(text == ""):
+        return []
     # Le damos el formato adecuado al texto
     splitString = TextFormatter.format(text)
 
     # Convertimos el texto formateado a Brail   le y lo imprimimos
     brailleList = BrailleConverter.generateFromList(splitString)
     guardarArchivo(brailleList)
+    return brailleList
 
 def guardarArchivo(brailleList,filename= 'resultados.py'):
     with open(filename,'w') as f:
         f.write(f"brailleList = {brailleList}")
+
+
 
 
 

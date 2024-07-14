@@ -9,4 +9,8 @@ ws.onopen = function(event) {
 function sendMessage(message) {
     ws.send(message);
 }
-
+function changePage() {
+    // Apaga todos los leds para un nuevo archivo
+    sendMessage("finish");
+    window.location.href = "http://127.0.0.1:5001"; 
+}
