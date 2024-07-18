@@ -53,11 +53,8 @@ private:
         break;
       case WStype_CONNECTED:
         Serial.println("Connected to WebSocket server");
-        // test message
-        //WebSocketHandler::webSocket.sendTXT("Hello server");
         break;
       case WStype_TEXT:
-        Serial.printf("Received: %s\n", payload);
         WebSocketHandler::parseResponse((char*)payload);
         break;
     }
@@ -65,8 +62,50 @@ private:
 
   // Given a response from the websockets host, it will be parsed and update the current message array
   static void parseResponse(char* response) {
-    // TODO: do something to update the response
+    /*
+      Format:
+        111010
+        010100
+        011110
+        001001
+        000000
+        000000
+    */
 
+    const int numRows = 6;
+    const int numCols = 6;
+    const int numConcatenatedLines = numRows / 2;
+    char* concatenatedLines[numConcatenatedLines];
+
+    // Create a modifiable copy of the input string
+    char* str = new char[strlen(response) + 1];
+    strcpy(str, response);
+
+    // Tokenize the string using '\n' as the delimiter
+    char* token = strtok(str, "\n");
+    int i = 0;
+    while (token != nullptr && i < numRows) {
+      if (i % 2 == 0) {
+        concatenatedLines[i / 2] = new char[numCols * 2 + 1];
+        strcpy(concatenatedLines[i / 2], token);  // Copy the first line
+      }
+      else {
+        strcat(concatenatedLines[i / 2], token);  // Concatenate the second line
+      }
+      token = strtok(nullptr, "\n");
+      i++;
+    }
+
+    for (int i = 0; i < Global::NUMBER_OF_SLAVES; i++) {
+      WebSocketHandler::currentMessages[i] = Message(concatenatedLines[i]);
+      WebSocketHandler::currentMessages[i].print();
+    }
+
+    for (int i = 0; i < numConcatenatedLines; i++) {
+      delete[] concatenatedLines[i];
+    }
+    delete[] str;
+    
   }
 
 public:

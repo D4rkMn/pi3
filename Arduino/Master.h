@@ -52,14 +52,16 @@ public:
 
   void notifySlave(Addressable* slave, const Message& message) {
     const uint8_t* macAddress = slave->getMacAddress();
-    //slave->printMacAddress();
+    slave->printMacAddress();
+
+    Serial.println("Notifying with:");
     message.print();
 
     esp_err_t result = esp_now_send(macAddress, (uint8_t*) &message, sizeof(message));
 
     switch (result) {
       case ESP_OK:
-        //Serial.println("ok");
+        Serial.println("ok");
         break;
       case ESP_ERR_ESPNOW_NOT_INIT:
         Serial.println("not init");

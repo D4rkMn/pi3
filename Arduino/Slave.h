@@ -46,6 +46,8 @@ public:
   ~Slave() {}
 
   static void onDataReceive(const esp_now_recv_info* mac, const uint8_t* incomingData, int len) {
+    Serial.println("received");
+
     if (len != sizeof(Slave::currentMessage)) {
       Serial.println("Received data length mismatch");
       return;

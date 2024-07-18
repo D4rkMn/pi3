@@ -16,7 +16,7 @@ const int PORT = HOST_PORT;
 // Class object instances
 
 WebSocketHandler* handler = nullptr;
-Master master;
+Master* master = nullptr;
 
 // I/O ports
 
@@ -29,38 +29,55 @@ void setup() {
   delay(2000);
 
   Serial.begin(9600);
-
   WiFi.mode(WIFI_AP_STA);
 
+  ///*
   handler = WebSocketBuilder().
     setWiFi(SSID, PASSWORD).
     setHost(IP, PORT).
   build();
+  //*/
 
   delay(1000);
 
-  //Slave::setupChannelBySSID(SSID);
+  /*
+  Slave::setupChannelBySSID(SSID);
+  */
 
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESPNOW");
     return;
   }
 
-  
   /*
   Slave* slaveInstance = new Slave();
   // Message size = 1
-  int LEDS[] = {5};
+  int LEDS[] = {
+    // First char
+    15, 4, 17, 18, 21, 22,
+    // Second char
+    13, 14, 26, 33, 32, 25
+  };
+  slaveInstance->printMacAddress();
   slaveInstance->registerLEDS(LEDS);
   delay(1000);
   return;
   */
   
 
-  uint8_t address[] = {0x34, 0x86, 0x5d, 0x3f, 0xb8, 0x70};
-  Addressable *addressable = new Addressable(address);
+  uint8_t address1[] = {0x34, 0x86, 0x5d, 0x3f, 0xb8, 0x70};
+  Addressable* slave1 = new Addressable(address1);
 
-  master.registerSlave(addressable);
+  uint8_t address2[] = {0x34, 0x86, 0x5d, 0x3f, 0xe0, 0x7c};
+  Addressable* slave2 = new Addressable(address2);
+
+  uint8_t address3[] = {0xd4, 0x8a, 0xfc, 0xaa, 0x15, 0xcc};
+  Addressable* slave3 = new Addressable(address3);
+
+  master = new Master();
+  master->registerSlave(slave1);
+  master->registerSlave(slave2);
+  master->registerSlave(slave3);
 
   pinMode(LEFT, INPUT);
   pinMode(RIGHT, INPUT);
@@ -72,18 +89,21 @@ void setup() {
 
 
 void loop() {
-  handler->loop();
   //return;
 
-  // On right button press, send message to ESP32s
-  bool array1[] = {(digitalRead(RIGHT) == HIGH)};
-  Message message1(array1);
-  Message messageArray[] = {message1};
-  master.notifySlaves(messageArray);
+  ///*
+  handler->loop();
+  const Message* messageArray = handler->getMessageArray();
+  master->notifySlaves(messageArray);
+  //*/
 
-  // On left button press, send message to WebSockets host
-  if (digitalRead(LEFT) == HIGH) {
-    const char* signal = "Hello server!";
+  // Handle button presses to iterate through the messages
+  if (digitalRead(RIGHT) == HIGH) {
+    const char* signal = "right";
+    handler->sendSignal(signal);
+  }
+  else if (digitalRead(LEFT) == HIGH) {
+    const char* signal = "left";
     handler->sendSignal(signal);
   }
 

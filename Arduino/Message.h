@@ -22,6 +22,12 @@ public:
       }
     }
 
+    Message(char* str) {
+      for (int i = 0; i < Global::NUMBER_OF_LEDS; i++) {
+        bits[i] = (str[i] == '1');
+      }
+    }
+
     bool getBit(int n) const {
       return bits[n];
     }

@@ -1,5 +1,5 @@
 // cambia esto por tu ip local
-const IP = "localhost";
+const IP = "192.168.1.35";
 
 const ws = new WebSocket(`ws://${IP}:8080`);
 
