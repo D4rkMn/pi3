@@ -42,11 +42,13 @@ async def handler(websocket, path):
     finally:
         connectedClients.remove(websocket)
 
+# Pon tu IP local aqui
+IP = ""
 
 def start_server():
-    server = websockets.serve(handler, "localhost", 8080)
+    server = websockets.serve(handler, IP, 8080)
     asyncio.get_event_loop().run_until_complete(server)
-    print("WebSocket server is running on ws://localhost:8080")
+    print(f"WebSocket server is running on ws://{IP}:8080")
     asyncio.get_event_loop().run_forever()
 
 if __name__ == "__main__":
